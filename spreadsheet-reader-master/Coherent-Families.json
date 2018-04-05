@@ -1,0 +1,717 @@
+[ 
+{ 
+"ID":12703,
+"Family":"Astrella"
+},
+{ 
+"ID":3813,
+"Family":"Avia NX Compact DPSS"
+},
+{ 
+"ID":3,
+"Family":"Azure"
+},
+{ 
+"ID":4933,
+"Family":"Chameleon"
+},
+{ 
+"ID":22743,
+"Family":"CO2 Slab Laser"
+},
+{ 
+"ID":13,
+"Family":"ColdRay"
+},
+{ 
+"ID":83,
+"Family":"Compass"
+},
+{ 
+"ID":23623,
+"Family":"COMPex"
+},
+{ 
+"ID":12053,
+"Family":"Conduction Cooled Package"
+},
+{ 
+"ID":10713,
+"Family":"Corelase"
+},
+{ 
+"ID":93,
+"Family":"CUBE"
+},
+{ 
+"ID":10593,
+"Family":"DF Series"
+},
+{ 
+"ID":10103,
+"Family":"DFG 9800/9850"
+},
+{ 
+"ID":213,
+"Family":"Diamond C-Series / CX Series"
+},
+{ 
+"ID":3673,
+"Family":"DIAMOND E-Series"
+},
+{ 
+"ID":473,
+"Family":"Diamond GEM-Series"
+},
+{ 
+"ID":3703,
+"Family":"DIAMOND J-Series"
+},
+{ 
+"ID":18533,
+"Family":"DILAS Fiber-HP-SMASMA"
+},
+{ 
+"ID":18423,
+"Family":"DILAS Fibers"
+},
+{ 
+"ID":18463,
+"Family":"DILAS PT-Q Fiber"
+},
+{ 
+"ID":14993,
+"Family":"Diode Lasers"
+},
+{ 
+"ID":23443,
+"Family":"EasyMark"
+},
+{ 
+"ID":12733,
+"Family":"EnergyMax Laser Sensors"
+},
+{ 
+"ID":12903,
+"Family":"EnergyMax-USB/RS Sensors"
+},
+{ 
+"ID":3943,
+"Family":"ExciStar XS"
+},
+{ 
+"ID":23273,
+"Family":"External Optics"
+},
+{ 
+"ID":18643,
+"Family":"Fiber Amplifiers"
+},
+{ 
+"ID":12203,
+"Family":"Fiber Coupled Laser Diodes"
+},
+{ 
+"ID":18583,
+"Family":"Fiber Lasers"
+},
+{ 
+"ID":23203,
+"Family":"Fiber Optic Cables"
+},
+{ 
+"ID":11823,
+"Family":"Fidelity Femtosecond Fiber Lasers"
+},
+{ 
+"ID":11313,
+"Family":"FLARE NX"
+},
+{ 
+"ID":12313,
+"Family":"G-Stack Diode Lasers"
+},
+{ 
+"ID":513,
+"Family":"Genesis Lasers"
+},
+{ 
+"ID":11623,
+"Family":"GeoLasHD"
+},
+{ 
+"ID":11963,
+"Family":"Harmonic Generator"
+},
+{ 
+"ID":11483,
+"Family":"HELIOS"
+},
+{ 
+"ID":23803,
+"Family":"Hidra"
+},
+{ 
+"ID":22703,
+"Family":"HighLight D"
+},
+{ 
+"ID":22673,
+"Family":"HighLight FL"
+},
+{ 
+"ID":22663,
+"Family":"HighLight FLP"
+},
+{ 
+"ID":12323,
+"Family":"Horizontal Diode Laser Arrays"
+},
+{ 
+"ID":4033,
+"Family":"HYPER RAPID"
+},
+{ 
+"ID":4153,
+"Family":"HyperRapid NX"
+},
+{ 
+"ID":23143,
+"Family":"Incoupling Optics"
+},
+{ 
+"ID":4243,
+"Family":"IndyStar"
+},
+{ 
+"ID":1473,
+"Family":"Innova 300C"
+},
+{ 
+"ID":1613,
+"Family":"Innova 70C"
+},
+{ 
+"ID":1683,
+"Family":"Innova 90C"
+},
+{ 
+"ID":1533,
+"Family":"Innova FreD"
+},
+{ 
+"ID":11813,
+"Family":"Innova ICE"
+},
+{ 
+"ID":1593,
+"Family":"Innova Sabre"
+},
+{ 
+"ID":14803,
+"Family":"Instrument Accessories"
+},
+{ 
+"ID":14273,
+"Family":"kW PowerMax-Pro Sensor"
+},
+{ 
+"ID":11563,
+"Family":"LAMBDA SX"
+},
+{ 
+"ID":10863,
+"Family":"Lasag"
+},
+{ 
+"ID":13113,
+"Family":"Laser Beam Diagnostics"
+},
+{ 
+"ID":13393,
+"Family":"Laser Power and Energy Meters"
+},
+{ 
+"ID":4293,
+"Family":"LEAP"
+},
+{ 
+"ID":11133,
+"Family":"Lee Lasers"
+},
+{ 
+"ID":10183,
+"Family":"Legend Elite Cryo PA"
+},
+{ 
+"ID":10133,
+"Family":"Legend Elite HE+"
+},
+{ 
+"ID":10193,
+"Family":"Libra"
+},
+{ 
+"ID":11723,
+"Family":"LineBeam"
+},
+{ 
+"ID":4393,
+"Family":"LPXpro"
+},
+{ 
+"ID":1983,
+"Family":"Magnum II Laser"
+},
+{ 
+"ID":4593,
+"Family":"MATRIX DPSS"
+},
+{ 
+"ID":11413,
+"Family":"Mephisto"
+},
+{ 
+"ID":23493,
+"Family":"META"
+},
+{ 
+"ID":11923,
+"Family":"META 1.5C"
+},
+{ 
+"ID":11953,
+"Family":"META 10C"
+},
+{ 
+"ID":11933,
+"Family":"META 2C"
+},
+{ 
+"ID":11943,
+"Family":"META 4C"
+},
+{ 
+"ID":2083,
+"Family":"Mini Laser"
+},
+{ 
+"ID":10233,
+"Family":"Mira"
+},
+{ 
+"ID":11263,
+"Family":"Monaco"
+},
+{ 
+"ID":20103,
+"Family":"NuBEAM"
+},
+{ 
+"ID":21063,
+"Family":"NuBEAM, NuCOMM,  NuPANDA"
+},
+{ 
+"ID":21073,
+"Family":"NuBEAM, NuCOMM, NuPANDA"
+},
+{ 
+"ID":22553,
+"Family":"NuBEAM, NuMATCH"
+},
+{ 
+"ID":20943,
+"Family":"NuBEAM, NuPANDA, NuVIEW, NuWIRE"
+},
+{ 
+"ID":20953,
+"Family":"NuBEAM, NuPANDA, NuWIRE"
+},
+{ 
+"ID":21153,
+"Family":"NuBRIDGE, NuCOMM"
+},
+{ 
+"ID":20213,
+"Family":"NuCOAT-FA, NuCOMM, NuEYDF"
+},
+{ 
+"ID":20223,
+"Family":"NuCOAT-FA, NuEYDF"
+},
+{ 
+"ID":21693,
+"Family":"NuCOAT-FA, NuEYDF, NuPANDA"
+},
+{ 
+"ID":21003,
+"Family":"NuCOAT-FA, NuGYRO, NuPANDA"
+},
+{ 
+"ID":21263,
+"Family":"NuCOAT-FA, NuMATCH"
+},
+{ 
+"ID":21523,
+"Family":"NuCOAT-FA, NuMATCH,  NuPANDA"
+},
+{ 
+"ID":20073,
+"Family":"NuCOAT-FA, NuMATCH, NuPANDA"
+},
+{ 
+"ID":21533,
+"Family":"NuCOAT-FA, NuMATCH, NuPANDA, NuYDF"
+},
+{ 
+"ID":21403,
+"Family":"NuCOAT-FA, NuMATCH, NuYDF"
+},
+{ 
+"ID":20853,
+"Family":"NuCOAT-FA, NuPANDA"
+},
+{ 
+"ID":21383,
+"Family":"NuCOAT-FA, NuPANDA, NuMATCH, NuYDF"
+},
+{ 
+"ID":20683,
+"Family":"NuCOAT-FA, NuPANDA, NuYDF"
+},
+{ 
+"ID":22393,
+"Family":"NuCOAT-FA, NuVIEW, NuXLMA, NuYDF"
+},
+{ 
+"ID":20713,
+"Family":"NuCOAT-FA, NuYDF"
+},
+{ 
+"ID":21953,
+"Family":"NuCOAT-FA,NuMATCH"
+},
+{ 
+"ID":21283,
+"Family":"NuCOAT-FA,NuTDF"
+},
+{ 
+"ID":20083,
+"Family":"NuCOMM"
+},
+{ 
+"ID":21143,
+"Family":"NuCOMM, Beam Delivery Fibers, Laser & Amplifier Fibers, Single-Mode Fibers"
+},
+{ 
+"ID":20483,
+"Family":"NuCOMM, NuBEAM"
+},
+{ 
+"ID":21213,
+"Family":"NuCOMM, NuBRIDGE"
+},
+{ 
+"ID":21173,
+"Family":"NuCOMM, NuEYDF"
+},
+{ 
+"ID":20903,
+"Family":"NuCOMM, NuEYDF, NuPANDA"
+},
+{ 
+"ID":20993,
+"Family":"NuCOMM, NuPANDA"
+},
+{ 
+"ID":20333,
+"Family":"NuCOMM, NuSENSOR"
+},
+{ 
+"ID":21913,
+"Family":"NuCOMM, NuSENSOR, NuVIEW"
+},
+{ 
+"ID":22463,
+"Family":"NuCOMM, NuSENSOR, NuWIRE"
+},
+{ 
+"ID":20063,
+"Family":"NuEYDF"
+},
+{ 
+"ID":21793,
+"Family":"NuEYDF, NuMATCH, NuPANDA"
+},
+{ 
+"ID":20913,
+"Family":"NuEYDF, NuPANDA"
+},
+{ 
+"ID":21883,
+"Family":"NuGYRO"
+},
+{ 
+"ID":21043,
+"Family":"NuGYRO, NuPANDA"
+},
+{ 
+"ID":20353,
+"Family":"NuGYRO, NuSENSOR"
+},
+{ 
+"ID":20053,
+"Family":"NuMATCH"
+},
+{ 
+"ID":21273,
+"Family":"NuMATCH, NuPANDA"
+},
+{ 
+"ID":22603,
+"Family":"NuMATCH, NuTDF"
+},
+{ 
+"ID":21493,
+"Family":"NuMATCH, NuYDF"
+},
+{ 
+"ID":20363,
+"Family":"NuPANDA"
+},
+{ 
+"ID":22343,
+"Family":"NuPANDA, NuCOAT-FA, NuMATCH"
+},
+{ 
+"ID":22333,
+"Family":"NuPANDA, NuCOAT-FA, NuMATCH, NuYDF"
+},
+{ 
+"ID":20093,
+"Family":"NuPANDA, NuTDF"
+},
+{ 
+"ID":20933,
+"Family":"NuPANDA, NuWIRE"
+},
+{ 
+"ID":20863,
+"Family":"NuPANDA, NuYDF"
+},
+{ 
+"ID":22203,
+"Family":"NuPANDA,NuCOMM"
+},
+{ 
+"ID":20883,
+"Family":"NuPANDA,NuYDF"
+},
+{ 
+"ID":20663,
+"Family":"NuSENSOR"
+},
+{ 
+"ID":22193,
+"Family":"NuSENSOR, NuCOMM, NuVIEW"
+},
+{ 
+"ID":20263,
+"Family":"NuTDF"
+},
+{ 
+"ID":22283,
+"Family":"NuVIEW, NuPANDA"
+},
+{ 
+"ID":20273,
+"Family":"NuWIRE"
+},
+{ 
+"ID":20253,
+"Family":"NuYDF"
+},
+{ 
+"ID":23503,
+"Family":"OBIS"
+},
+{ 
+"ID":2373,
+"Family":"OBIS Lasers"
+},
+{ 
+"ID":12003,
+"Family":"OPA 9400/9450"
+},
+{ 
+"ID":10353,
+"Family":"OperA Solo"
+},
+{ 
+"ID":11873,
+"Family":"Opera-F & Opera-HP"
+},
+{ 
+"ID":4853,
+"Family":"Paladin"
+},
+{ 
+"ID":22833,
+"Family":"PowerLine E"
+},
+{ 
+"ID":22773,
+"Family":"PowerLine F"
+},
+{ 
+"ID":22843,
+"Family":"PowerLine L"
+},
+{ 
+"ID":2973,
+"Family":"PowerLine Laser"
+},
+{ 
+"ID":22903,
+"Family":"PowerLine Pico"
+},
+{ 
+"ID":22873,
+"Family":"PowerLine Prime"
+},
+{ 
+"ID":14383,
+"Family":"PowerMax USB/RS Sensors"
+},
+{ 
+"ID":14113,
+"Family":"PowerMax-Pro Sensor"
+},
+{ 
+"ID":14203,
+"Family":"PowerMax-Pro USB/RS Sensors"
+},
+{ 
+"ID":10603,
+"Family":"PRC Series"
+},
+{ 
+"ID":23703,
+"Family":"Pulse Compressors"
+},
+{ 
+"ID":11993,
+"Family":"Pulse PIcker"
+},
+{ 
+"ID":4723,
+"Family":"RAPID"
+},
+{ 
+"ID":4763,
+"Family":"RAPID NX"
+},
+{ 
+"ID":14693,
+"Family":"Reduced Price Power Meter/Sensor Kits"
+},
+{ 
+"ID":10423,
+"Family":"RegA"
+},
+{ 
+"ID":11353,
+"Family":"Revolution"
+},
+{ 
+"ID":23613,
+"Family":"Sapphire"
+},
+{ 
+"ID":3013,
+"Family":"Sapphire Lasers"
+},
+{ 
+"ID":23403,
+"Family":"Select"
+},
+{ 
+"ID":13513,
+"Family":"Sensors - Laser Power"
+},
+{ 
+"ID":12413,
+"Family":"Single Emitter Diode Lasers"
+},
+{ 
+"ID":4773,
+"Family":"Staccato"
+},
+{ 
+"ID":23023,
+"Family":"StarFemto FX"
+},
+{ 
+"ID":22953,
+"Family":"StarFiber"
+},
+{ 
+"ID":23063,
+"Family":"StarPulse"
+},
+{ 
+"ID":23103,
+"Family":"StarShape"
+},
+{ 
+"ID":3243,
+"Family":"StingRay and BioRay Lasers"
+},
+{ 
+"ID":4783,
+"Family":"SUPER RAPID-HE"
+},
+{ 
+"ID":23713,
+"Family":"Synchrolock-AP"
+},
+{ 
+"ID":23363,
+"Family":"Tinsley Custom Optics"
+},
+{ 
+"ID":10473,
+"Family":"TOPAS Prime"
+},
+{ 
+"ID":11903,
+"Family":"Ultrafast Oscillator Accessories"
+},
+{ 
+"ID":12473,
+"Family":"Unmounted Diode Laser Bars"
+},
+{ 
+"ID":11673,
+"Family":"UVblade"
+},
+{ 
+"ID":11633,
+"Family":"VarioLas"
+},
+{ 
+"ID":3493,
+"Family":"Verdi Lasers"
+},
+{ 
+"ID":10543,
+"Family":"Vitara"
+},
+{ 
+"ID":23753,
+"Family":"Vitara-CEP Stabilizer"
+},
+{ 
+"ID":4823,
+"Family":"VYPER"
+}]
