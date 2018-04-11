@@ -117,17 +117,10 @@ class Products{
 		
 		// prepare sql and bind parameters
 		$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE `Product_ID`  = :id AND (Product_Attribute = 'URL' OR Product_Attribute = 'WAVELENGTH' OR Product_Attribute = 'MODE' OR Product_Attribute = 'TECHNOLOGY' OR Product_Attribute = 'POWER' OR Product_Attribute = 'PULSE_WIDTH')");
-		//$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE `Product_ID`  = :id");
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		while ($row = $stmt->fetchObject()) {
 			$product_attribute = $row->Product_Attribute;
-			//print $row->Product_Attribute . " :::: " . $row->Product_Attribute_Value . "\r\n";
-			//if( $row->Product_Attribute_Value === NULL || $row->Product_Attribute_Value == ""){
-				//$product_attribute_value = "N/A";
-			//}else{
-			//	$product_attribute_value = $row->Product_Attribute_Value;
-			//}
 			$product_attribute_value = $row->Product_Attribute_Value;
 			$results[$product_attribute] = $product_attribute_value;
 		}
@@ -143,7 +136,6 @@ class Products{
 	public function get_product_attributes_lmc( $id ){		
 		
 		// prepare sql and bind parameters
-		//$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE Product_ID = :id");
 		$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE `Product_ID`  = :id AND (Product_Attribute = 'URL' OR Product_Attribute = 'WAVELENGTH_MIN' OR Product_Attribute = 'WAVELENGTH_MAX' OR Product_Attribute = 'DETECTOR_DIAMETER' OR Product_Attribute = 'MIN_ENERGY' OR Product_Attribute = 'MAX_ENERGY' OR Product_Attribute = 'REPETITION_RATE_MAX')");
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
@@ -170,7 +162,6 @@ class Products{
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		while ($row = $stmt->fetchObject()) {
-			//$results[] = array("title"=>$row->Title,"url"=>"http://www.coherent.com/");
 			$results[] = $row->Title;
 		}
 
