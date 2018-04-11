@@ -66,18 +66,18 @@ class Products{
 		while ($row = $stmt->fetchObject()) {
 			
 			$product_id = $row->ID;				
-			$attribs = $this->get_product_attributes( $product_id );
+			$attribs = $this->get_product_attributes( $product_id );			
 			$row->wavelength = $attribs['WAVELENGTH'];
 			$row->power = $attribs['POWER'];
 			$row->pulse_width = $attribs['PULSE_WIDTH'];
 			$row->mode = $attribs['MODE'];
-			$row->url = $attribs['URL'];	
+			$row->url = $attribs['URL'];
+			$row->technology = $attribs['TECHNOLOGY'];			
 			$applications = $this->get_applications_by_product( $product_id ); 			
 			$row->application = $applications;
 			$results[$product_id] = $row;
 			
 		}
-		
 		return $results;
 	}
 	
@@ -99,6 +99,7 @@ class Products{
 			$row->max_wavelength = $attribs['WAVELENGTH_MAX'];
 			$row->max_repetition_rate = $attribs['REPETITION_RATE_MAX'];
 			$row->url = $attribs['URL'];
+			$row->product_id = $product_id;
 			
 			$applications = $this->get_applications_by_product( $product_id ); 
 			$row->application = $applications;
@@ -115,14 +116,22 @@ class Products{
 	public function get_product_attributes( $id ){		
 		
 		// prepare sql and bind parameters
-		$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE Product_Attribute = 'WAVELENGTH' AND Product_Attribute = 'MODE' AND Product_Attribute = 'URL' AND `Product_ID`  = :id");
+		$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE `Product_ID`  = :id AND (Product_Attribute = 'URL' OR Product_Attribute = 'WAVELENGTH' OR Product_Attribute = 'MODE' OR Product_Attribute = 'TECHNOLOGY' OR Product_Attribute = 'POWER' OR Product_Attribute = 'PULSE_WIDTH')");
+		//$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE `Product_ID`  = :id");
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		while ($row = $stmt->fetchObject()) {
 			$product_attribute = $row->Product_Attribute;
+			//print $row->Product_Attribute . " :::: " . $row->Product_Attribute_Value . "\r\n";
+			//if( $row->Product_Attribute_Value === NULL || $row->Product_Attribute_Value == ""){
+				//$product_attribute_value = "N/A";
+			//}else{
+			//	$product_attribute_value = $row->Product_Attribute_Value;
+			//}
 			$product_attribute_value = $row->Product_Attribute_Value;
 			$results[$product_attribute] = $product_attribute_value;
 		}
+
 		return $results;
 	}
 	
@@ -134,7 +143,8 @@ class Products{
 	public function get_product_attributes_lmc( $id ){		
 		
 		// prepare sql and bind parameters
-		$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE Product_ID = :id");
+		//$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE Product_ID = :id");
+		$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE `Product_ID`  = :id AND (Product_Attribute = 'URL' OR Product_Attribute = 'WAVELENGTH_MIN' OR Product_Attribute = 'WAVELENGTH_MAX' OR Product_Attribute = 'DETECTOR_DIAMETER' OR Product_Attribute = 'MIN_ENERGY' OR Product_Attribute = 'MAX_ENERGY' OR Product_Attribute = 'REPETITION_RATE_MAX')");
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		//$stmt->debugDumpParams();
@@ -142,11 +152,9 @@ class Products{
 		while ($row = $stmt->fetchObject()) {
 			$product_attribute = $row->Product_Attribute;
 			$product_attribute_value = $row->Product_Attribute_Value;
-			//$results[] = array($product_attribute=>$product_attribute_value);
 			$results[$product_attribute] = $product_attribute_value;
+			$results['Product_ID'] = $id;
 		}
-		
-		//print_r($results);
 		return $results;
 	}	
 	
@@ -162,10 +170,8 @@ class Products{
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		while ($row = $stmt->fetchObject()) {
-			//$product_id = $row->Product_ID;
-			//$product_attribute = $row->Product_Application_ID;
-			//$product_attribute_value = $row->Product_Application_ID;
-			$results[] = array("title"=>$row->Title,"url"=>"http://www.coherent.com/");
+			//$results[] = array("title"=>$row->Title,"url"=>"http://www.coherent.com/");
+			$results[] = $row->Title;
 		}
 
 		return $results;		
