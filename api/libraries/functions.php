@@ -24,6 +24,8 @@ function build_nav( $products_object, $category = "lasers" ){
 		$product_name = trim(preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $value->Name));
 		if(strlen(trim( $value->power )) > 0){
 			$power =  trim(preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $value->power));
+			$power_array = explode(",",$power);
+			$power = trim(max($power_array));
 		}else{
 			$power =  "";
 		}
@@ -54,7 +56,7 @@ function build_nav( $products_object, $category = "lasers" ){
 			$url =  "";
 		}	
 		if( is_array($value->application) ){
-			$application =  implode(",",$value->application);
+			$application =  implode(", ",$value->application);
 		}else{
 			$application =  "";
 		}			
