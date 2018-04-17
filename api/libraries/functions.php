@@ -8,6 +8,8 @@ function build_nav( $products_object, $category = "lasers" ){
 	switch( $category ){
 		case "lasers":
 			$category_header = "Lasers";
+			$applications_key_filter = "Lasers Applications Filter List";
+			$technology_key_filter = "Lasers Technology Filter List";
 			break;
 		case "components":
 			$category_header = "Components";
@@ -18,7 +20,10 @@ function build_nav( $products_object, $category = "lasers" ){
 	}
 	$products_items_array = array(); // array to hold individual arrays
 	
-	$products_columns_array = array("Product Name","Application","Technology","Wavelength","Power","Mode","Pulse Width","Compare");
+	$applications_array = "";
+	$technology_array = "";
+	
+	$products_columns_array = array("Product Name","Application","Technology","Wavelength","Power","Mode","Pulse Width");
 	foreach( $products_object as $key=>$value){
 		
 		$product_name = trim(preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $value->Name));
@@ -31,6 +36,7 @@ function build_nav( $products_object, $category = "lasers" ){
 		}
 		if( !empty($value->technology) ){
 			$technology =  trim(preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $value->technology));
+			$technology_array[] = $technology;
 		}else{
 			$technology =  "";
 		}
@@ -57,6 +63,9 @@ function build_nav( $products_object, $category = "lasers" ){
 		}	
 		if( is_array($value->application) ){
 			$application =  implode(", ",$value->application);
+			foreach( $value->application as $indie_value){
+				$applications_array[] = $indie_value;
+			}
 		}else{
 			$application =  "";
 		}			
@@ -67,15 +76,19 @@ function build_nav( $products_object, $category = "lasers" ){
 			"wavelength"=>$wavelength,
 			"power"=>$power,
 			"mode"=>$mode,
-			"pulse_width"=>$pulse_width,
-			"compare"=>"<compare_checkbox>"
+			"pulse_width"=>$pulse_width
 		);			
 		//$products_items_array[] = $products_items_columns;
 		$products_items_array[] = array("url"=>$url,"columns"=>$products_items_columns);
 	}
+	$applications_array = array_unique($applications_array);
+	sort($applications_array);
+	
+	$technology_array = array_unique($technology_array);
+	sort($technology_array);	
 	
 	// 04.10.2018 Added key "html_row"
-	$products_array = array("name"=>$category_header,"html_row"=>"","columns"=>$products_columns_array,"items"=>$products_items_array);	
+	$products_array = array("name"=>$category_header,"html_row"=>"","columns"=>$products_columns_array,"items"=>$products_items_array,"applications_key_filter"=>$applications_array,"technology_key_filter"=>$technology_array);	
 	//$categories = array("categories"=>array($products_array));
 	return $products_array;	
 }
