@@ -70,7 +70,7 @@ class Products{
 			$row->wavelength = $attribs['WAVELENGTH'];
 			$row->power = $attribs['POWER'];
 			$row->pulse_width = $attribs['PULSE_WIDTH'];
-			$row->mode = $attribs['MODE'];
+			$row->mode = $attribs['OPERATIONMODE'];
 			$row->url = $attribs['URL'];
 			$row->technology = $attribs['TECHNOLOGY'];			
 			$applications = $this->get_applications_by_product( $product_id ); 			
@@ -116,7 +116,7 @@ class Products{
 	public function get_product_attributes( $id ){		
 		
 		// prepare sql and bind parameters
-		$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE `Product_ID`  = :id AND (Product_Attribute = 'URL' OR Product_Attribute = 'WAVELENGTH' OR Product_Attribute = 'MODE' OR Product_Attribute = 'TECHNOLOGY' OR Product_Attribute = 'POWER' OR Product_Attribute = 'PULSE_WIDTH')");
+		$stmt = $this->conn->prepare("SELECT * FROM `".$this->attributes."` WHERE `Product_ID`  = :id AND (Product_Attribute = 'URL' OR Product_Attribute = 'WAVELENGTH' OR Product_Attribute = 'OPERATIONMODE' OR Product_Attribute = 'TECHNOLOGY' OR Product_Attribute = 'POWER' OR Product_Attribute = 'PULSE_WIDTH')");
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		while ($row = $stmt->fetchObject()) {
