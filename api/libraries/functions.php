@@ -10,18 +10,30 @@ function build_nav( $products_object, $category = "lasers" ){
 			$category_header = "Lasers";
 			$applications_key_filter = "Lasers Applications Filter List";
 			$technology_key_filter = "Lasers Technology Filter List";
+			$wavelength_key_filter = "Lasers Wavelength Filter List";
+			$pulse_width_key_filter = "Lasers Pulse Width Filter List";
 			break;
 		case "components":
 			$category_header = "Components";
+			$applications_key_filter = "Components Applications Filter List";
+			$technology_key_filter = "Components Technology Filter List";	
+			$wavelength_key_filter = "Components Wavelength Filter List";	
+			$pulse_width_key_filter = "Components Pulse Width Filter List";			
 			break;
 		case "tools_systems":
 			$category_header = "Tools & Systems";
+			$applications_key_filter = "Tools & Systems Applications Filter List";
+			$technology_key_filter = "Tools & Systems Technology Filter List";
+			$wavelength_key_filter = "Tools & Systems Wavelength Filter List";
+			$pulse_width_key_filter = "Tools & Systems Pulse Width Filter List";	
 			break;
 	}
 	$products_items_array = array(); // array to hold individual arrays
 	
 	$applications_array = "";
 	$technology_array = "";
+	$wavelength_array = "";
+	$pulse_width_array = "";
 	
 	$products_columns_array = array("Product Name","Application","Technology","Wavelength","Power","Mode","Pulse Width");
 	foreach( $products_object as $key=>$value){
@@ -42,6 +54,7 @@ function build_nav( $products_object, $category = "lasers" ){
 		}
 		if( !empty($value->wavelength) ){
 			$wavelength =  $value->wavelength;
+			$wavelength_array[] = $wavelength;
 		}else{
 			$wavelength =  "";
 		}
@@ -50,17 +63,26 @@ function build_nav( $products_object, $category = "lasers" ){
 		}else{
 			$mode =  "";
 		}
+		// Pulse width is stored in the database as a commad delimited string
+		// split string into an array and then use this array 
 		if( !empty($value->pulse_width) ){
-			$pulse_width =  $value->pulse_width;
+			//$pulse_width =  $value->pulse_width;
+			$pulse_width = explode(",",$value->pulse_width);
+			foreach( $pulse_width as $indie_value){
+				$pulse_width_array[] = $indie_value;
+			}			
 		}else{
 			$pulse_width =  "";
 		}	
 		
+		// URL
 		if( !empty($value->url)){
 			$url =  $value->url;
 		}else{
 			$url =  "";
 		}	
+		
+		// Applications
 		if( is_array($value->application) ){
 			$application =  implode(", ",$value->application);
 			foreach( $value->application as $indie_value){
@@ -68,16 +90,81 @@ function build_nav( $products_object, $category = "lasers" ){
 			}
 		}else{
 			$application =  "";
+		}
+		// MATERIALS
+		if( !empty($value->materials)){
+			$materials =  $value->materials;
+		}else{
+			$materials =  "";
+		}
+		// MATERIAL THICKNESS
+		if( !empty($value->material_thickness)){
+			$material_thickness =  $value->material_thickness;
+		}else{
+			$material_thickness =  "";
+		}	
+
+		// MOTION TYPE
+		if( !empty($value->motion_type)){
+			$motion_type =  $value->motion_type;
+		}else{
+			$motion_type =  "";
+		}	
+		
+		// MAX WORK AREA
+		if( !empty($value->max_work_area)){
+			$max_work_area =  $value->max_work_area;
+		}else{
+			$max_work_area =  "";
 		}			
-		$products_items_columns = array(
-			"product_name"=>$product_name,
-			"application"=>$application,
-			"technology"=>$technology,
-			"wavelength"=>$wavelength,
-			"power"=>$power,
-			"mode"=>$mode,
-			"pulse_width"=>$pulse_width
-		);			
+		
+		// PRECISION
+		if( !empty($value->precision)){
+			$precision =  $value->precision;
+		}else{
+			$precision =  "";
+		}		
+		
+		switch( $category ){
+			case "components":
+				$products_columns_array = array("Product Name","Application","Technology","Wavelength","Power","Mode","Pulse Width");
+				$products_items_columns = array(
+					"product_name"=>$product_name,
+					"application"=>$application,
+					"technology"=>$technology,
+					"wavelength"=>$wavelength,
+					"power"=>$power,
+					"mode"=>$mode,
+					"pulse_width"=>$pulse_width
+				);
+			break;
+			case "lasers":
+				$products_columns_array = array("Product Name","Technology","Wavelength","Power","Mode","Pulse Width");
+				$products_items_columns = array(
+					"product_name"=>$product_name,
+					"technology"=>$technology,
+					"wavelength"=>$wavelength,
+					"power"=>$power,
+					"mode"=>$mode,
+					"pulse_width"=>$pulse_width
+				);
+			break;
+			case "tools_systems":
+				$materials = 'Aluminum, Anodized Aluminum, Brass, Copper';
+				$products_columns_array = array("Product Name","Application","Material Type","Material Thickness","Motion Type","Max. Work Area","Precision");
+				$products_items_columns = array(
+					"product_name"=>$product_name,
+					"application"=>"Cutting, Welding, Structuring, Drilling, Ablating",
+					"materials"=>$materials,
+					"material_thickness"=>$material_thickness,
+					"motion_type"=>$motion_type,
+					"max_work_area"=>$max_work_area,
+					"precision"=>$precision
+				);
+			break;
+			
+		}
+		
 		//$products_items_array[] = $products_items_columns;
 		$products_items_array[] = array("url"=>$url,"columns"=>$products_items_columns);
 	}
@@ -85,153 +172,277 @@ function build_nav( $products_object, $category = "lasers" ){
 	sort($applications_array);
 	
 	$technology_array = array_unique($technology_array);
-	sort($technology_array);	
+	sort($technology_array);
+
+	$wavelength_array = array_unique($wavelength_array);
+	sort($wavelength_array);	
+	
+	$pulse_width_array = array_unique($pulse_width_array);
+	sort($pulse_width_array);	
 	
 	// 04.10.2018 Added key "html_row"
-	$products_array = array("name"=>$category_header,"html_row"=>"","columns"=>$products_columns_array,"items"=>$products_items_array,"applications_key_filter"=>$applications_array,"technology_key_filter"=>$technology_array);	
+	$products_array = array(
+		"name"=>$category_header,
+		"html_row"=>"",
+		"columns"=>$products_columns_array,
+		"items"=>$products_items_array,
+		"applications_key_filter"=>$applications_array,
+		"technology_key_filter"=>$technology_array,
+		"wavelength_key_filter"=>$wavelength_array,
+		"pulse_width_key_filter"=>$pulse_width_array
+		);	
 	//$categories = array("categories"=>array($products_array));
+
 	return $products_array;	
 }
 
 function build_nav_lmc( $products, $subcategory ){
-
-
 	
 	$energy_sensors_items = array();
 
 	// iterate through all the Energy Products and make multidimentional array
 	foreach( $products as $product){
 		
+		switch($subcategory){		
+			case "Energy Sensors":
+				// Ensure that NULL values are addressed
+				if( !empty($product->url) ){
+					$url =  $product->url;
+				}else{
+					$url =  "";
+				}	
 
-		// Ensure that NULL values are addressed
-		if( !empty($product->url) ){
-			$url =  $product->url;
-		}else{
-			$url =  "";
-		}		
-		if( !empty($product->detector_diameter) ){
-			$detector_diameter =  $product->detector_diameter;
-		}else{
-			$detector_diameter =  "";
+				if( !empty($product->min_energy) ){
+					$min_energy =  $product->min_energy;
+				}else{
+					$min_energy =  "";
+				}
+				if( !empty($product->max_energy) ){
+					$max_energy =  $product->max_energy;
+				}else{
+					$max_energy =  "";
+				}
+				
+				if( !empty($product->repetition_rate_max) ){
+					$repetition_rate_max =  $product->repetition_rate_max;
+				}else{
+					$repetition_rate_max =  "";
+				}
+				if( !empty($product->aperture_size) ){
+					$aperture_size =  $product->aperture_size;
+				}else{
+					$aperture_size =  "";
+				}	
+				if( !empty($product->wavelength) ){
+					$wavelength =  $product->wavelength;
+				}else{
+					$wavelength =  "";
+				}
+				if( !empty($product->pulse_width) ){
+					$pulse_width =  $product->pulse_width;
+				}else{
+					$pulse_width =  "";
+				}				
+				$energy_sensors_items[] = array(
+					"url"=>$url, 
+					"columns"=>array("energy_sensors"=>$product->Name,
+							"wavelength"=>$wavelength,
+							"aperture_size"=>$aperture_size,
+							"min_energy"=>$min_energy,
+							"max_energy"=>$max_energy,
+							"wavelength"=>$wavelength,
+							"repetition_rate"=>$repetition_rate_max,							
+							"pulse_width"=>$pulse_width
+							)
+				);	
+
+				
+				break;
+			case "Power Sensors":
+				// Ensure that NULL values are addressed
+				if( !empty($product->url) ){
+					$url =  $product->url;
+				}else{
+					$url =  "";
+				}					
+				
+				if( !empty($product->aperture_size) ){
+					$aperture_size =  $product->aperture_size;
+				}else{
+					$aperture_size =  "";
+				}	
+				if( !empty($product->wavelength) ){
+					$wavelength =  $product->wavelength;
+				}else{
+					$wavelength =  "";
+				}
+				if( !empty($product->pulse_width) ){
+					$pulse_width =  $product->pulse_width;
+				}else{
+					$pulse_width =  "";
+				}	
+				if( !empty($product->power_min) ){
+					$power_min =  $product->power_min;
+				}else{
+					$power_min =  "";
+				}	
+				if( !empty($product->power_max) ){
+					$power_max =  $product->power_max;
+				}else{
+					$power_max =  "";
+				}
+				if( !empty($product->cooling_width) ){
+					$cooling_width =  $product->cooling_width;
+				}else{
+					$cooling_width =  "";
+				}				
+				$energy_sensors_items[] = array(
+					"url"=>$url, 
+					"columns"=>array("energy_sensors"=>$product->Name,
+							"wavelength"=>$wavelength,
+							"aperture_size"=>$aperture_size,
+							"min_power"=>$power_min,
+							"max_energy"=>$power_max,
+							"wavelength"=>$wavelength,
+							"cooling_width"=>$cooling_width
+							)
+				);	
+					
+			break;
+		
+		case "Power & Energy Meters":
+				// Ensure that NULL values are addressed
+				if( !empty($product->url) ){
+					$url =  $product->url;
+				}else{
+					$url =  "";
+				}					
+				
+				if( !empty($product->repetition_rate_max) ){
+					$repetition_rate_max =  $product->repetition_rate_max;
+				}else{
+					$repetition_rate_max =  "";
+				}	
+				if( !empty($product->pc_interface) ){
+					$pc_interface =  $product->pc_interface;
+				}else{
+					$pc_interface =  "";
+				}	
+				if( !empty($product->measurement_type) ){
+					$measurement_type =  $product->measurement_type;
+				}else{
+					$measurement_type =  "";
+				}	
+				if( !empty($product->uncertainty) ){
+					$uncertainty =  $product->uncertainty;
+				}else{
+					$uncertainty =  "";
+				}				
+				$energy_sensors_items[] = array(
+					"url"=>$url, 
+					"columns"=>array("energy_sensors"=>$product->Name,
+							"repetition_rate_max"=>$repetition_rate_max,
+							"pc_interface"=>$pc_interface,
+							"measurement_type"=>$measurement_type,
+							"uncertainty"=>$uncertainty
+							)
+				);	
+					
+			break;	
+			
+		case "Beam Diagnostics":
+				// Ensure that NULL values are addressed
+				if( !empty($product->url) ){
+					$url =  $product->url;
+				}else{
+					$url =  "";
+				}		
+				if( !empty($product->wavelength) ){
+					$wavelength =  $product->wavelength;
+				}else{
+					$wavelength =  "";
+				}				
+				if( !empty($product->beam_diameter) ){
+					$beam_diameter =  $product->beam_diameter;
+				}else{
+					$beam_diameter =  "";
+				}		
+				if( !empty($product->active_area) ){
+					$active_area =  $product->active_area;
+				}else{
+					$active_area =  "";
+				}					
+				if( !empty($product->pixel_size) ){
+					$pixel_size =  $product->pixel_size;
+				}else{
+					$pixel_size =  "";
+				}		
+				if( !empty($product->laser_type) ){
+					$laser_type =  $product->laser_type;
+				}else{
+					$laser_type =  "";
+				}						
+							
+				$energy_sensors_items[] = array(
+					"url"=>$url, 
+					"columns"=>array("energy_sensors"=>$product->Name,
+							"wavelength"=>$wavelength,
+							"beam_diameter"=>$beam_diameter,
+							"active_area"=>$active_area,
+							"pixel_size"=>$pixel_size,
+							"laser_type"=>$laser_type
+							)
+				);	
+					
+			break;			
+			
 		}
-		if( !empty($product->min_energy) ){
-			$min_energy =  $product->min_energy;
-		}else{
-			$min_energy =  "";
-		}
-		if( !empty($product->max_energy) ){
-			$max_energy =  $product->max_energy;
-		}else{
-			$max_energy =  "";
-		}
-		if( !empty($product->min_wavelength) ){
-			$min_wavelength =  $product->min_wavelength;
-		}else{
-			$min_wavelength =  "";
-		}	
-		if( !empty($product->max_wavelength) ){
-			$max_wavelength =  $product->max_wavelength;
-		}else{
-			$max_wavelength =  "";
-		}
-		if( !empty($product->max_repetition_rate) ){
-			$max_repetition_rate =  $product->max_repetition_rate;
-		}else{
-			$max_repetition_rate =  "";
-		}
-	
-		$energy_sensors_items[] = array(
-			"url"=>$url, 
-			"columns"=>array("energy_sensors"=>$product->Name,
-					"detector_diameter"=>$detector_diameter,
-					"min_energy"=>$min_energy,
-					"max_energy"=>$max_energy,
-					"min_wavelength"=>$min_wavelength,
-					"max_wavelength"=>$max_wavelength,
-					"max_repetition_rate"=>$max_repetition_rate
-					)
-		);		
 	}
-
-		$lmc_items_columns1 = array(
-			"energy_sensors"=>"Excimer: Energy Max Sensors",
-			"detector_diameter"=>"50/25",
-			"min_energy"=>"500 µJ",
-			"max_energy"=> "1 J",
-			"min_wavelength"=>"0.19",
-			"max_wavelength"=>"0.266",
-			"max_repetition_rate"=>"200"
-		);
-		$lmc_items_columns2 = array(
-			"energy_sensors"=>"High Rep-Rate: Energy Max Sensors",
-			"detector_diameter"=>"50/25/10",
-			"min_energy"=>"500 µJ",
-			"max_energy"=> "1 J",
-			"min_wavelength"=>"0.193",
-			"max_wavelength"=>"2.1",
-			"max_repetition_rate"=>"10000"
-		);	
-		$lmc_items_columns3 = array(
-			"energy_sensors"=>"Multipurpose: Energy Max Sensors",
-			"detector_diameter"=>"50/25/10",
-			"min_energy"=>"1 mJ",
-			"max_energy"=> "2 J",
-			"min_wavelength"=>"0.19",
-			"max_wavelength"=>"12",
-			"max_repetition_rate"=>"300"
-		);		
-		$energy_sensors_columns = array("Energy Sensors",
-			"Detector Diameter",
-			"Min. Energy",
-			"Max. Energy",
-			"Min. Wavelength",
-			"Max. Wavelength",
-			"Max. Repetition Rate"
-		);
-		$power_sensors_columns = array("Power Sensors",
-			"Detector Diameter",
-			"Min. Energy",
-			"Max. Energy",
-			"Min. Wavelength",
-			"Max. Wavelength",
-			"Max. Repetition Rate"
-		);	
-		$power_energy_columns = array("Power & Energy Meters",
-			"Measurement Type",
-			"Statistics",
-			"Data Logging",
-			"Graphing",
-			"PC Interface"
-		);		
-		/*
-		$energy_sensors_items = array(
-			array("url"=>"https://www.coherent.com/lasers/laser/continuous-wave-cw/azure","columns"=>$lmc_items_columns1),	
-			array("url"=>"https://www.coherent.com/lasers/laser/continuous-wave-cw/azure","columns"=>$lmc_items_columns2),
-			array("url"=>"https://www.coherent.com/lasers/laser/continuous-wave-cw/azure","columns"=>$lmc_items_columns3),			
-		);
-		$power_sensors_items = array(
-			array("url"=>"https://www.coherent.com/lasers/laser/continuous-wave-cw/azure","columns"=>$lmc_items_columns1),	
-			array("url"=>"https://www.coherent.com/lasers/laser/continuous-wave-cw/azure","columns"=>$lmc_items_columns2),
-			array("url"=>"https://www.coherent.com/lasers/laser/continuous-wave-cw/azure","columns"=>$lmc_items_columns3),			
-		);		
-		$power_energy_items = array(
-			array("url"=>"https://www.coherent.com/lasers/laser/continuous-wave-cw/azure","columns"=>$lmc_items_columns1),	
-			array("url"=>"https://www.coherent.com/lasers/laser/continuous-wave-cw/azure","columns"=>$lmc_items_columns2),
-			array("url"=>"https://www.coherent.com/lasers/laser/continuous-wave-cw/azure","columns"=>$lmc_items_columns3),			
-		);		
-		*/
-		/*
-		$lmc_subcategories = array(
-			array("name"=>"Energy Sensors","image"=>"/assets/site_images/energy-sensors.jpg","columns"=>$energy_sensors_columns,"items"=>$energy_sensors_items),
-			array("name"=>"Power Sensors","image"=>"/assets/site_images/power-sensors.jpg","columns"=>$power_sensors_columns,"items"=>$power_sensors_items),
-			array("name"=>"Power & Energy Meters","image"=>"/assets/site_images/power-energy-meters.jpg","columns"=>$power_energy_columns,"items"=>$power_energy_items)
-			);
-			*/
-		//$lmc_subcategories = array(
-			//array("name"=>$subcategory,"image"=>"/assets/site_images/energy-sensors.jpg","columns"=>$energy_sensors_columns,"items"=>$energy_sensors_items)
-			//);
-		$lmc_subcategories = array("name"=>$subcategory,"image"=>"/assets/site_images/energy-sensors.jpg","columns"=>$energy_sensors_columns,"items"=>$energy_sensors_items);
-		//$lmc_array = array("name"=>"Laser Measurement","sub_categories"=>$lmc_subcategories);	
+		
+		switch($subcategory){
+			case "Energy Sensors":
+				$sub_category_image = "/assets/site_images/energy-sensors.jpg";
+				$sub_category_columns = array("Energy Sensors",
+					"Wavelength",
+					"Aperture Size",
+					"Min. Energy",
+					"Max. Energy",
+					"Repetition Rate",
+					"Laser Pulse Width"
+				);
+				break;
+			case "Power Sensors":
+				$sub_category_image = "/assets/site_images/power-sensors.jpg";
+				$sub_category_columns = array("Power Sensors",
+					"Wavelength",
+					"Aperture Size",
+					"Min. Power",
+					"Max. Power",
+					"Cooling Width"
+				);	
+				break;
+			case "Power & Energy Meters":
+				$sub_category_image = "/assets/site_images/power-energy-meters.jpg";
+				$sub_category_columns = array("Power & Energy Meters",
+					"Repetition Rate",
+					"Computer Interface",
+					"Measurement Type",
+					"Calibration Uncertainty"
+				);	
+				break;
+			case "Beam Diagnostics":
+				$sub_category_image = "/assets/site_images/power-energy-meters.jpg";
+				$sub_category_columns = array($subcategory,
+					"Wavelength",
+					"Beam Diameter",
+					"Active Area",
+					"Pixel Size",
+					"Laser Type"
+				);				
+				break;
+		}
+		
+		$lmc_subcategories = array("name"=>$subcategory,"image"=>$sub_category_image,"columns"=>$sub_category_columns,"items"=>$energy_sensors_items);
 		
 	return $lmc_subcategories;	
 }
