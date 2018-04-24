@@ -24,9 +24,10 @@ switch(strtolower($set_to_read)){
 		$filetoread = 'Product_Spec_Migration-1500-1999.xlsx';
 		break;	
 	case "e":
-		$filename = 'products-2000-2156.sql';
-		$filetoread = 'Product_Spec_Migration-2000-2156.xlsx';
-		break;	
+		$filename = 'products-2000-2279.sql';
+		$filetoread = 'Product_Spec_Migration-2000-2279.xlsx';
+		break;
+		
 }
 unlink($filename);
 $handle = fopen($filename, 'w') or die('Cannot open file:  '.$filename);	
@@ -48,11 +49,12 @@ include ('functions.php'); // contains pre-determined array of data fields for a
 
 		$handle = fopen($filename, 'a') or die('Cannot open file:  '.$filename);
 		$product_id = $Row[0];
-		$product_name = addslashes(trim($Row[1]));
-		$acquired_site = addslashes(trim($Row[1444]));
+		//$product_name = addslashes(trim($Row[1]));
+		$product_name = trim(preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $Row[1]));
+		$acquired_site = addslashes(trim($Row[1492]));
 		
 		if( $product_name != ""){					
-			$insert_string = "INSERT INTO `pd_products_general` (`ID`,`Name`,`Acquired_Site`) VALUES ('".$product_id."','".$product_name."','".$acquired_site."');";
+			$insert_string = "INSERT INTO `pd_products_general_beta` (`ID`,`Name`,`Acquired_Site`) VALUES ('".$product_id."','".$product_name."','".$acquired_site."');";
 			$insert_string .= "\r\n";
 			//print $insert_string. "<br/>";
 			fwrite($handle, $insert_string);	
@@ -100,7 +102,7 @@ include ('functions.php'); // contains pre-determined array of data fields for a
 					}		
 						print $acquired_site . "<br/>";
 					if( $field != ""){					
-						$insert_string = "INSERT INTO `pd_products_general` (`ID`,`Name`,`Acquired_Site`) VALUES ('','".$product_name."','".$acquired_site."');";
+						$insert_string = "INSERT INTO `pd_products_general_beta` (`ID`,`Name`,`Acquired_Site`) VALUES ('','".$product_name."','".$acquired_site."');";
 						$insert_string .= "\r\n";
 						print $insert_string. "<br/>";
 						fwrite($handle, $insert_string);	

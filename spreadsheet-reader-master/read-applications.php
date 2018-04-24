@@ -87,8 +87,7 @@ include ('functions.php'); // contains pre-determined array of data fields for a
 					//print $insert_string . "<br/>";
 					$insert_string .= "\r\n";
 					fwrite($handle, $insert_string);	
-					$insert_string = "";
-					
+					$insert_string = "";					
 				}
 				
 			}
