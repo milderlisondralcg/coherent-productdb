@@ -19,23 +19,8 @@ if( isset($_GET["output"]) ){
 $output = "json";
 
 $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-//var_dump(parse_url($url));
-
 
 switch( $action ){
-	case "products-nav-explode":
-		$filename = "product-nav.json";
-		$nav = build_nav_json();
-		$handle = fopen($filename, 'w') or die('Cannot open file:  '.$filename);	
-		print_r($nav);
-		$string_to_write = json_encode($nav);
-		fwrite($handle, $string_to_write);
-		fclose($handle);		
-		break;
-	case "products-nav":
-		$nav = build_nav_json();
-		print json_encode($nav);
-		break;
 	case "products":
 		$products_list = $products_obj->get_products();
 		if( $output == "explode"){
@@ -43,26 +28,6 @@ switch( $action ){
 		}else{
 			print json_encode($products_list);
 		}
-		break;
-	case "lmc":
-		$lmc_list_energy = $products_obj->get_lmc_nav_products('Energy'); // LMC
-		$lmc_list_power = $products_obj->get_lmc_nav_products('Power'); // LMC
-		$lmc_list_meter = $products_obj->get_lmc_nav_products('Meters'); // LMC
-		$energy_subcategory = build_nav_lmc($lmc_list_energy, "Energy Sensors");
-		$power_subcategory = build_nav_lmc($lmc_list_power, "Power Sensors");
-		$meter_subcategory = build_nav_lmc($lmc_list_meter, "Power & Energy Meters");
-		$sub_categories = array($energy_subcategory,$power_subcategory);
-
-		print json_encode($sub_categories);
-		//$lmc_list_total = array("name"=>"Laser Measurement","sub_categories"=>build_nav_lmc($lmc_list_power));
-/* 		if( $_GET['type'] == "energy" ){
-			//print_r($lmc_list_energy);
-			print_r(build_nav_lmc($lmc_list_energy));
-		}else{
-			//print_r($lmc_list_power);
-			print_r(build_nav_lmc($lmc_list_power));
-		} */
-		
 		break;
 	case "get-nav":
 	
@@ -139,7 +104,7 @@ switch( $action ){
 		}else{
 			$response = build_nav_lmc($products_list);
 		}
-		//$response = build_nav($products_list);
+
 		switch( $cat ){
 			case "lasers":
 				$filename = "product-nav-lasers.json";
@@ -161,11 +126,4 @@ switch( $action ){
 		
 		print json_encode($response);
 		break;	
-	case "milder";
-		print "milder";
-		break;
-	case "":
-		$categories = $products_obj->get_categories();
-		print json_encode($categories);
-		break;
 }
