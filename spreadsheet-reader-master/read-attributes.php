@@ -26,7 +26,7 @@ switch(strtolower($set_to_read)){
 	case "e":
 		$filename = 'add_products_attributes-2000-2279.sql';
 		$filetoread = 'Product_Spec_Migration-2000-2279.xlsx';
-		break;			
+		break;
 }
 
 unlink($filename);
@@ -41,14 +41,15 @@ include ('functions.php'); // contains pre-determined array of data fields for a
 	require('SpreadsheetReader.php');
 
 	$spreadsheet_reader = new SpreadsheetReader($filetoread);
+	$insert_string .= "INSERT INTO `pd_products_attributes_beta` (`Product_ID`,`Product_Attribute`,`Product_Attribute_Value`) VALUES ";
 	
 	foreach ($spreadsheet_reader as $Row){
 		print '<pre>';
-
+		
 		$handle = fopen($filename, 'a') or die('Cannot open file:  '.$filename);
 			foreach($Row as $key=>$field){
 				
-				if($key <= 1454){
+				if($key <= 1506){
 					
 					$record_id = $Row[0];
 				
@@ -56,20 +57,27 @@ include ('functions.php'); // contains pre-determined array of data fields for a
 						$product_attribute = $fields_array[$key]; // $fields_array contains the column names from the original Excel file
 						if( $field != ""){
 							$product_attribute_value = trim($field);
-							$insert_string = "INSERT INTO `pd_products_attributes_beta` (`Product_ID`,`Product_Attribute`,`Product_Attribute_Value`) VALUES ('".$record_id."','".$product_attribute."','".$product_attribute_value."');"; 
+							//$insert_string = "INSERT INTO `pd_products_attributes_beta` (`Product_ID`,`Product_Attribute`,`Product_Attribute_Value`) VALUES ('".$record_id."','".$product_attribute."','".$product_attribute_value."');"; 
+							$insert_string .= "('".$record_id."','".$product_attribute."','".$product_attribute_value."'),"; 
 							$insert_string .= "\r\n";
 							
-							fwrite($handle, $insert_string);	
-							$insert_string = "";
+							//fwrite($handle, $insert_string);	
+							//$insert_string = "";
 						}
 					}
 				}
 			}
-			
+
 			// close file
-			fclose($handle);			
+			//fclose($handle);			
 
 		print '</pre>';
 	}
+	
+	$insert_string = trim($insert_string);	
+			$clean_insert_string = substr($insert_string, 0, (strlen($insert_string) - 1)) . ";";
+			fwrite($handle, $clean_insert_string);
+			// close file
+			fclose($handle);
 
 	
