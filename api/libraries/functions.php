@@ -26,6 +26,10 @@ function build_nav( $products_object, $category = "lasers" ){
 			$technology_key_filter = "Tools & Systems Technology Filter List";
 			$wavelength_key_filter = "Tools & Systems Wavelength Filter List";
 			$pulse_width_key_filter = "Tools & Systems Pulse Width Filter List";	
+			$material_thickness_key_filter = "";
+			$material_type_key_filter = "";
+			$motion_type_key_filter = "";
+			$max_work_area_key_filter = "";
 			break;
 	}
 	$products_items_array = array(); // array to hold individual arrays
@@ -34,24 +38,29 @@ function build_nav( $products_object, $category = "lasers" ){
 	$technology_array = "";
 	$wavelength_array = "";
 	$pulse_width_array = "";
+	$mode_array = "";
+	$power_array = "";
 	
 	$products_columns_array = array("Product Name","Application","Technology","Wavelength","Power","Mode","Pulse Width");
+	
 	foreach( $products_object as $key=>$value){
 		
 		$product_name = trim(preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $value->Name));
 		if(strlen(trim( $value->power )) > 0){
 			$power =  trim(preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $value->power));
-			$power_array = explode(",",$power);
-			$power = trim(max($power_array));
+			$power_item_array = explode(",",$power);
+			$power = trim(max($power_item_array));
 		}else{
 			$power =  "";
 		}
+		/*
 		if( !empty($value->technology) ){
 			$technology =  trim(preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $value->technology));
 			$technology_array[] = $technology;
 		}else{
 			$technology =  "";
 		}
+		*/
 		if( !empty($value->wavelength) ){
 			$wavelength =  $value->wavelength;
 			$wavelength_array[] = $wavelength;
@@ -63,11 +72,12 @@ function build_nav( $products_object, $category = "lasers" ){
 		}else{
 			$mode =  "";
 		}
-		// Pulse width is stored in the database as a commad delimited string
+		// Pulse width is stored in the database as a comma delimited string
 		// split string into an array and then use this array 
 		if( !empty($value->pulse_width) ){
+			$pulse_width = trim($value->pulse_width);
 			//$pulse_width =  $value->pulse_width;
-			$pulse_width = explode(",",$value->pulse_width);
+			$pulse_width = explode(",",$pulse_width);
 			foreach( $pulse_width as $indie_value){
 				$pulse_width_array[] = $indie_value;
 			}			
@@ -82,24 +92,97 @@ function build_nav( $products_object, $category = "lasers" ){
 			$url =  "";
 		}	
 		
+		// Begin section where filter arrays/lists are created
+		
 		// Applications
+
+		print_r($value->application);
+		if( !empty($value->application)){
+			$application =  $value->application;
+			$application_array =  explode(",",$application);
+			if( is_array($application_array) ){
+				foreach( $application_array as $indie_value){
+					$application_array[] = ltrim($indie_value);
+				}
+			}			
+		}else{
+			$application =  "";
+		}
+		/*
 		if( is_array($value->application) ){
-			$application =  implode(", ",$value->application);
+			$application =  implode(",",$value->application);
 			foreach( $value->application as $indie_value){
 				$applications_array[] = $indie_value;
 			}
 		}else{
 			$application =  "";
 		}
-		// MATERIALS
+		*/
+		// Technology
+		if( !empty(trim($value->technology)) || strlen($value->technology) > 0){
+			$technology =  trim(preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $value->technology));
+			$technology =  explode(",",$technology);
+			if( is_array($technology) ){
+				foreach( $technology as $indie_value){
+					$technology_array[] = ltrim($indie_value);
+				}
+			}else{
+				$technology_array[] = ltrim($technology);
+			}
+		}		
+
+		// Power
+		
+		if( !empty(trim($value->power)) || strlen($value->power) > 0){
+			$power_value =  trim(preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $value->power));
+			$power_value =  explode(",",$power_value);
+
+			if( is_array($power_value) ){
+				foreach( $power_value as $indie_value){
+					if( !empty($indie_value) ){
+						$power_array[] = ltrim($indie_value);	
+					}				
+				}
+			}else{
+				$power_array[] = ltrim($power);
+			}
+		}
+		
+
+		// Mode
+		if( !empty(trim($value->mode)) || strlen($value->mode) > 0){
+			$mode =  trim(preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $value->mode));
+			$mode =  explode(",",$mode);
+			if( is_array($mode) ){
+				foreach( $mode as $indie_value){
+					$mode_array[] = ltrim($indie_value);
+				}
+			}else{
+				$mode_array[] = ltrim($mode);
+			}
+		}
+
+		// MATERIALS TYPE
 		if( !empty($value->materials)){
 			$materials =  $value->materials;
+			$materials_array =  explode(",",$materials);
+			if( is_array($materials_array) ){
+				foreach( $materials_array as $indie_value){
+					$material_type_key_filter[] = ltrim($indie_value);
+				}
+			}
 		}else{
 			$materials =  "";
 		}
 		// MATERIAL THICKNESS
 		if( !empty($value->material_thickness)){
 			$material_thickness =  $value->material_thickness;
+			$material_thickness_array =  explode(",",$material_thickness);
+			if( is_array($material_thickness_array) ){
+				foreach( $material_thickness_array as $indie_value){
+					$material_thickness_key_filter[] = ltrim($indie_value);
+				}
+			}			
 		}else{
 			$material_thickness =  "";
 		}	
@@ -107,6 +190,12 @@ function build_nav( $products_object, $category = "lasers" ){
 		// MOTION TYPE
 		if( !empty($value->motion_type)){
 			$motion_type =  $value->motion_type;
+			$motion_type_array =  explode(",",$motion_type);
+			if( is_array($motion_type_array) ){
+				foreach( $motion_type_array as $indie_value){
+					$motion_type_key_filter[] = ltrim($indie_value);
+				}
+			}			
 		}else{
 			$motion_type =  "";
 		}	
@@ -114,6 +203,12 @@ function build_nav( $products_object, $category = "lasers" ){
 		// MAX WORK AREA
 		if( !empty($value->max_work_area)){
 			$max_work_area =  $value->max_work_area;
+			$max_work_area_array =  explode(",",$max_work_area);
+			if( is_array($max_work_area_array) ){
+				foreach( $max_work_area_array as $indie_value){
+					$max_work_area_key_filter[] = ltrim($indie_value);
+				}
+			}			
 		}else{
 			$max_work_area =  "";
 		}			
@@ -121,9 +216,17 @@ function build_nav( $products_object, $category = "lasers" ){
 		// PRECISION
 		if( !empty($value->precision)){
 			$precision =  $value->precision;
+			$precision_array =  explode(",",$precision);
+			if( is_array($precision_array) ){
+				foreach( $precision_array as $indie_value){
+					$precision_key_filter[] = ltrim($indie_value);
+				}
+			}			
 		}else{
 			$precision =  "";
 		}		
+		
+		// End section where filter arrays/lists are created
 		
 		switch( $category ){
 			case "components":
@@ -150,11 +253,10 @@ function build_nav( $products_object, $category = "lasers" ){
 				);
 			break;
 			case "tools_systems":
-				$materials = 'Aluminum, Anodized Aluminum, Brass, Copper';
 				$products_columns_array = array("Product Name","Application","Material Type","Material Thickness","Motion Type","Max. Work Area","Precision");
 				$products_items_columns = array(
 					"product_name"=>$product_name,
-					"application"=>"Cutting, Welding, Structuring, Drilling, Ablating",
+					"application"=>$application,
 					"materials"=>$materials,
 					"material_thickness"=>$material_thickness,
 					"motion_type"=>$motion_type,
@@ -180,16 +282,44 @@ function build_nav( $products_object, $category = "lasers" ){
 	$pulse_width_array = array_unique($pulse_width_array);
 	sort($pulse_width_array);	
 	
+	$mode_array = array_unique($mode_array);
+	sort($mode_array);	
+
+	$power_array = array_unique($power_array);
+	sort($power_array);
+
+	$material_thickness_key_filter = array_unique($material_thickness_key_filter);
+	sort($material_thickness_key_filter);
+	
+	$material_type_key_filter = array_unique($material_type_key_filter);
+	sort($material_type_key_filter);	
+	
+	$motion_type_key_filter = array_unique($motion_type_key_filter);
+	sort($motion_type_key_filter);
+	
+	$max_work_area_key_filter = array_unique($max_work_area_key_filter);
+	sort($max_work_area_key_filter);
+	
+	$precision_key_filter = array_unique($precision_key_filter); 
+	sort($precision_key_filter);
+	
 	// 04.10.2018 Added key "html_row"
 	$products_array = array(
 		"name"=>$category_header,
 		"html_row"=>"",
 		"columns"=>$products_columns_array,
 		"items"=>$products_items_array,
-		"applications_key_filter"=>$applications_array,
+		"application_key_filter"=>$applications_array,
 		"technology_key_filter"=>$technology_array,
 		"wavelength_key_filter"=>$wavelength_array,
-		"pulse_width_key_filter"=>$pulse_width_array
+		"pulse_width_key_filter"=>$pulse_width_array,
+		"mode_key_filter"=>$mode_array,
+		"power_key_filter" => $power_array,
+		"material_thickness_key_filter"=>$material_thickness_key_filter,
+		"materials_key_filter" => $material_type_key_filter,
+		"motion_type_key_filter" => $motion_type_key_filter,
+		"max_work_area_key_filter" => $max_work_area_key_filter,
+		"precision_key_filter" => $precision_key_filter
 		);	
 	//$categories = array("categories"=>array($products_array));
 
@@ -418,7 +548,7 @@ function build_nav_lmc( $products, $subcategory ){
 					"Aperture Size",
 					"Min. Power",
 					"Max. Power",
-					"Cooling Width"
+					"Cooling Method"
 				);	
 				break;
 			case "Power & Energy Meters":
