@@ -8,32 +8,15 @@ function build_nav( $products_object, $category = "lasers" ){
 	switch( $category ){
 		case "lasers":
 			$category_header = "Lasers";
-			$applications_key_filter = "Lasers Applications Filter List";
-			$technology_key_filter = "Lasers Technology Filter List";
-			$wavelength_key_filter = "Lasers Wavelength Filter List";
-			$pulse_width_key_filter = "Lasers Pulse Width Filter List";
 			break;
 		case "components":
 			$category_header = "Components";
-			$applications_key_filter = "Components Applications Filter List";
-			$technology_key_filter = "Components Technology Filter List";	
-			$wavelength_key_filter = "Components Wavelength Filter List";	
-			$pulse_width_key_filter = "Components Pulse Width Filter List";			
 			break;
 		case "tools_systems":
 			$category_header = "Tools & Systems";
-			$applications_key_filter = "Tools & Systems Applications Filter List";
-			$technology_key_filter = "Tools & Systems Technology Filter List";
-			$wavelength_key_filter = "Tools & Systems Wavelength Filter List";
-			$pulse_width_key_filter = "Tools & Systems Pulse Width Filter List";	
-			$material_thickness_key_filter = "";
-			$material_type_key_filter = "";
-			$motion_type_key_filter = "";
-			$max_work_area_key_filter = "";
 			break;
 	}
 	$products_items_array = array(); // array to hold individual arrays
-	
 	$applications_array = "";
 	$technology_array = "";
 	$wavelength_array = "";
